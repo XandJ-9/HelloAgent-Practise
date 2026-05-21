@@ -1,0 +1,936 @@
+﻿# 🤖 《从零开始构建智能体》 [Hello, Agents]
+## 🎯 项目介绍
+### ✨ 你将收获什么？
+## 💡 如何学习
+# 前言
+## 写给读者的建议
+# 第一部分：智能体与语言模型基础
+# 第一章 初识智能体
+## 1.1 什么是智能体？
+### 1.1.1 传统视角下的智能体
+### 1.1.2 大语言模型驱动的新范式
+### 1.1.3 智能体的类型
+## 1.2 智能体的构成与运行原理
+### 1.2.1 任务环境定义
+### 1.2.2 智能体的运行机制
+### 1.2.3 智能体的感知与行动
+## 1.3 动手体验：5 分钟实现第一个智能体
+### 1.3.1 准备工作
+# 可用工具:
+# 行动格式:
+# 任务完成:
+# 将所有工具函数放入一个字典，方便后续调用
+### 1.3.2 接入大语言模型
+### 1.3.3 执行行动循环
+# --- 1. 配置LLM客户端 ---# 请根据您使用的服务，将这里替换成对应的凭证和地址
+### 1.3.4 运行案例分析
+## 1.4 智能体应用的协作模式
+### 1.4.1 作为开发者工具的智能体
+### 1.4.2 作为自主协作者的智能体
+### 1.4.3 Workflow 和 Agent 的差异
+## 1.4 本章小结
+## 习题
+## 参考文献
+# 第二章 智能体发展史
+## 2.1 基于符号与逻辑的早期智能体
+### 2.1.1 物理符号系统假说
+### 2.1.2 专家系统
+### 2.1.3 SHRDLU
+### 2.1.4 符号主义面临的根本性挑战
+## 2.2 构建基于规则的聊天机器人
+### 2.2.1 ELIZA 的设计思想
+### 2.2.2 模式匹配与文本替换
+### 2.2.3 核心逻辑的实现
+# 定义规则库:模式(正则表达式) -> 响应模板列表
+# 定义代词转换规则
+# 主聊天循环
+## 2.3 马文·明斯基的心智社会
+### 2.3.1 对单一整体智能模型的反思
+### 2.3.2 作为协作体的智能
+### 2.3.3 对多智能体系统的理论启发
+## 2.4 学习范式的演进与现代智能体
+### 2.4.1 从符号到联结
+### 2.4.2 基于强化学习的智能体
+### 2.4.3 基于大规模数据的预训练
+### 2.4.4 基于大语言模型的智能体
+### 2.4.5 智能体发展关键节点概览
+## 2.5 本章小结
+## 习题
+## 参考文献
+# 第三章 大语言模型基础
+## 3.1 语言模型与 Transformer 架构
+### 3.1.1 从 N-gram 到 RNN
+# 示例语料库，与上方案例讲解中的语料库保持一致
+# --- 第一步:计算 P(datawhale) ---
+# --- 第二步:计算 P(agent|datawhale) ---
+# 先计算 bigrams 用于后续步骤
+# count_datawhale 已在第一步计算
+# --- 第三步:计算 P(learns|agent) ---
+# --- 最后:将概率连乘 ---
+# 假设我们已经学习到了简化的二维词向量
+# king - man + woman
+# 计算结果向量与 "queen" 的相似度
+### 3.1.2 Transformer 架构解析
+# --- 占位符模块，将在后续小节中实现 ---
+# --- 编码器核心层 ---
+# --- 解码器核心层 ---
+### 3.1.3 Decoder-Only 架构
+## 3.2 与大语言模型交互
+### 3.2.1 提示工程
+# 案例
+# 案例
+# 思维链提示
+### 3.2.2 文本分词
+# 准备语料库，每个词末尾加上</w>表示结束，并切分好字符
+### 3.2.3 调用开源大语言模型
+# 指定模型ID
+# 设置设备，优先使用GPU
+# 加载分词器
+# 加载模型，并将其移动到指定设备
+# 准备对话输入
+# 使用分词器的模板格式化输入
+# 编码输入文本
+# 使用模型生成回答
+# max_new_tokens 控制了模型最多能生成多少个新的Token
+# 将生成的 Token ID 截取掉输入部分
+# 这样我们只解码模型新生成的部分
+# 解码生成的 Token ID
+### 3.2.4 模型的选择
+## 3.3 大语言模型的缩放法则与局限性
+### 3.3.1 缩放法则
+### 3.3.2 模型幻觉
+## 3.4 本章小结
+## 习题
+## 参考文献
+# 第二部分：构建你的大语言模型智能体
+# 第四章 智能体经典范式构建
+## 4.1 环境准备与基础工具定义
+### 4.1.1 安装依赖库
+### 4.1.2 配置 API 密钥
+# .env fileLLM_API_KEY="YOUR-API-KEY"LLM_MODEL_ID="YOUR-MODEL"LLM_BASE_URL="YOUR-URL"
+### 4.1.3 封装基础 LLM 调用函数
+# 加载 .env 文件中的环境变量
+## 4.2 ReAct
+### 4.2.1 ReAct 的工作流程
+### 4.2.2 工具的定义与实现
+# .env file# ... (保留之前的LLM配置)SERPAPI_API_KEY="YOUR_SERPAPI_API_KEY"
+# --- 工具初始化与使用示例 ---if __name__ == '__main__':# 1. 初始化工具执行器
+### 4.2.3 ReAct 智能体的编码实现
+# ReAct 提示词模板
+# (这些方法是 ReActAgent 类的一部分)def _parse_output(self, text: str):"""解析LLM的输出，提取Thought和Action。"""
+# (这段逻辑在 run 方法的 while 循环内)# 3. 解析LLM的输出
+# (这段逻辑紧随工具调用之后，在 while 循环的末尾)print(f"👀 观察: {observation}")# 将本轮的Action和Observation添加到历史记录中
+### 4.2.4 ReAct 的特点、局限性与调试技巧
+## 4.3 Plan-and-Solve
+### 4.3.1 Plan-and-Solve 的工作原理
+### 4.3.2 规划阶段
+# 假定 llm_client.py 中的 HelloAgentsLLM 类已经定义好# from llm_client import HelloAgentsLLMclass Planner:def __init__(self, llm_client):
+### 4.3.3 执行器与状态管理
+# 原始问题:
+# 完整计划:
+# 历史步骤与结果:
+# 当前步骤:
+### 4.3.4 运行实例与分析
+## 4.4 Reflection
+### 4.4.1 Reflection 机制的核心思想
+### 4.4.2 案例设定与记忆模块设计
+### 4.4.3 Reflection 智能体的编码实现
+# 原始任务:{task}# 待审查的代码:
+# 原始任务:{task}# 你上一轮尝试的代码:{last_code_attempt}
+# 假设 llm_client.py 和 memory.py 已定义# from llm_client import HelloAgentsLLM# from memory import Memoryclass ReflectionAgent:def __init__(self, llm_client, max_iterations=3):
+### 4.4.4 运行实例与分析
+### 4.4.5 Reflection 机制的成本收益分析
+## 4.5 本章小结
+## 习题
+## 参考文献
+# 第五章 基于低代码平台的智能体搭建
+## 5.1 平台化构建的兴起
+### 5.1.1 为何需要低代码平台
+### 5.1.2 低代码平台的选择
+## 5.2 平台一：Coze
+### 5.2.1 Coze 的功能模块
+### 5.2.2 构建“每日AI简报”助手
+# 角色
+## 工作流
+### 日报输出格式
+# 注意事项（Attention）
+# AI日报 by@jasonhuang 2025-09-24
+## 🚀 AI技术新闻
+## 📚 AI学术论文
+## 💻 AI开源项目
+### 5.2.3 Coze 的优势与局限性分析
+## 5.3 平台二：Dify
+### 5.3.1 Dify 的介绍与生态
+### 5.3.2 构建一个超级智能体个人助手
+# Role: 日常问题咨询专家
+## Profile
+## Skills
+## Rules
+## Workflows
+## Initialization
+# 一、 角色人设（Role）
+# 二、 背景（Background）
+# 三、 任务目标（Task）
+# 四、 限制提示（Limit）
+# 五、 输出格式要求（Example）
+# 一、 角色人设（Role）
+# 二、 背景（Background）
+# 三、 任务目标（Task）
+# 四、 限制提示（Limit）
+# 五、 输出格式要求（Example）
+# 一、 角色人设（Role）
+# 二、 背景（Background）
+# 三、 任务目标（Task）
+# 四、 限制提示（Limit）
+# 五、 输出格式要求（Example）
+### 5.3.3 Dify 的优势与局限性分析
+## 5.4 平台三：n8n
+### 5.4.1 n8n 的节点与工作流
+### 5.4.2 搭建智能邮件助手
+### 5.4.3 构建 Agent 的私有知识库
+### 5.4.4 创建 Agent 主工作流
+# Prompt (User Message)
+# 上下文信息
+# System Message
+# 角色和目标
+# 上下文信息
+# 可用工具
+# 执行步骤
+# 规则和限制
+### 5.4.5 n8n 的优势与局限性分析
+## 5.5 本章小结
+## 习题
+## 参考文献
+# 第六章 框架开发实践
+## 6.1 从手动实现到框架开发
+### 6.1.1 为何需要智能体框架
+### 6.1.2 主流框架的选型与对比
+## 6.2 框架一：AutoGen
+### 6.2.1 AutoGen 的核心机制
+### 6.2.2 软件开发团队
+### 6.2.3 核心代码实现
+# 定义团队聊天和协作规则
+# 主程序入口if __name__ == "__main__":
+### 1. 需求理解与分析...
+### 技术方案实施...
+### 代码审查...
+### 6.2.4 AutoGen 的优势与局限性分析
+## 6.3 框架二：AgentScope
+### 6.3.1 AgentScope 的设计
+# 消息的标准结构
+### 6.3.2 三国狼人杀游戏
+# 并行收集所有玩家的投票决策
+### 6.3.3 AgentScope 的优势与局限性分析
+## 6.4 框架三：CAMEL
+### 6.4.1 CAMEL 的自主协作
+### 6.4.2 AI 科普电子书
+# 定义协作任务
+# 初始化角色扮演会话# AI 作家作为 "user"，负责提出写作结构和要求# AI 心理学家作为 "assistant"，负责提供专业知识和内容
+# 开始协作对话
+### 6.4.3 CAMEL 的优势与局限性分析
+## 6.5 框架四：LangGraph
+### 6.5.1 LangGraph 的结构梳理
+# 定义全局状态的数据结构class AgentState(TypedDict):
+# 定义一个“规划者”节点函数def planner_node(state: AgentState) -> AgentState:"""根据当前任务制定计划，并更新状态。"""
+# 定义一个“执行者”节点函数def executor_node(state: AgentState) -> AgentState:"""执行最新计划，并更新状态。"""
+# 初始化一个状态图，并绑定我们定义的状态结构
+### 6.5.2 三步问答助手
+# 加载 .env 文件中的环境变量
+### 合适的景点推荐：
+### 小贴士：
+### 6.5.3 LangGraph 的优势与局限性分析
+## 6.6 本章小结
+## 习题
+## 参考文献
+# 第七章 构建你的智能体框架
+## 7.1 框架整体架构设计
+### 7.1.1 为何需要自建Agent框架
+### 7.1.2 HelloAgents框架的设计理念
+### 7.1.3 本章学习目标
+# python版本需要>=3.10
+# 配置好同级文件夹下.env中的大模型API, 可参考code文件夹配套的.env.example，也可以拿前几章的案例的.env文件复用。from hello_agents import SimpleAgent, HelloAgentsLLM
+# 加载环境变量
+## 7.2 HelloAgentsLLM扩展
+### 7.2.1 支持多提供商
+# my_llm.pyimport os
+# .env fileMODELSCOPE_API_KEY="your-modelscope-api-key"
+# my_main.pyfrom dotenv import load_dotenv
+# 准备消息
+### 7.2.2 本地模型调用
+# 启动 VLLM 服务，并加载 Qwen1.5-0.5B-Chat 模型
+# 首次运行会自动下载模型，之后会直接启动服务
+# 在 .env 文件中设置LLM_BASE_URL="http://localhost:8000/v1"LLM_API_KEY="vllm"# Python 代码中直接实例化即可
+### 7.2.3 自动检测机制
+# 框架内部日志会显示检测到 provider 为 'ollama'# 后续调用方式完全不变
+## 7.3 框架接口实现
+### 7.3.1 Message 类
+# 定义消息角色的类型，限制其取值
+### 7.3.2 Config 类
+### 7.3.3 Agent 抽象基类
+## 7.4 Agent范式的框架化实现
+### 7.4.1 SimpleAgent
+# my_simple_agent.pyfrom typing import Optional, Iterator
+# 继续在 my_simple_agent.py 中添加import re
+# 继续在 my_simple_agent.py 中添加class MySimpleAgent(SimpleAgent):# ... 前面的方法def _run_with_tools(self, messages: list, input_text: str, max_tool_iterations: int, **kwargs) -> str:"""支持工具调用的运行逻辑"""
+# 继续在 my_simple_agent.py 中添加class MySimpleAgent(SimpleAgent):# ... 前面的方法def stream_run(self, input_text: str, **kwargs) -> Iterator[str]:"""
+# test_simple_agent.pyfrom dotenv import load_dotenv
+# 加载环境变量
+### 7.4.2 ReActAgent
+## 可用工具
+## 工作流程
+## 重要提醒
+## 当前任务
+## 执行历史
+# my_react_agent.pyimport re
+### 7.4.3 ReflectionAgent
+# 原始任务:
+# 当前回答:
+# 原始任务:
+# 上一轮回答:
+# 反馈意见:
+# test_reflection_agent.pyfrom dotenv import load_dotenv
+### 7.4.4 PlanAndSolveAgent
+# 默认规划器提示词模板
+# 默认执行器提示词模板
+# 原始问题:{question}# 完整计划:{plan}# 历史步骤与结果:{history}# 当前步骤:{current_step}
+# test_plan_solve_agent.pyfrom dotenv import load_dotenv
+# 加载环境变量
+# 创建专门用于数学问题的自定义提示词
+### 7.4.5 FunctionCallAgent
+## 7.5 工具系统
+### 7.5.1 工具基类与注册机制设计
+### 7.5.2 自定义工具开发
+# my_calculator_tool.pyimport ast
+# test_my_calculator.pyfrom dotenv import load_dotenv
+# 加载环境变量
+### 7.5.3 多源搜索工具
+# my_advanced_search.pyimport os
+# test_advanced_search.pyfrom dotenv import load_dotenv
+# 加载环境变量
+### 7.5.4 工具系统的高级特性
+# tool_chain_manager.pyfrom typing import List, Dict, Any, Optional
+# async_tool_executor.pyimport asyncio
+## 7.6 本章小结
+## 习题
+# 第三部分：高级知识扩展
+# 第八章 记忆与检索
+## 8.1 从认知科学到智能体记忆
+### 8.1.1 人类记忆系统的启发
+### 8.1.2 为何智能体需要记忆与RAG
+# 第七章的Agent使用方式from hello_agents import SimpleAgent, HelloAgentsLLM
+### 8.1.3 记忆与RAG系统架构设计
+### 8.1.4 本章学习目标与快速体验
+# ================================# Qdrant 向量数据库配置 - 获取API密钥：https://cloud.qdrant.io/# ================================# 使用Qdrant云服务 (推荐)QDRANT_URL=https://your-cluster.qdrant.tech:6333
+# 或使用本地Qdrant (需要Docker)# QDRANT_URL=http://localhost:6333# QDRANT_API_KEY=# Qdrant集合配置QDRANT_COLLECTION=hello_agents_vectors
+# 或使用本地Neo4j (需要Docker)# NEO4J_URI=bolt://localhost:7687# NEO4J_USERNAME=neo4j# NEO4J_PASSWORD=hello-agents-password# Neo4j连接配置NEO4J_DATABASE=neo4j
+# 配置好同级文件夹下.env中的大模型APIfrom hello_agents import SimpleAgent, HelloAgentsLLM, ToolRegistry
+# 创建LLM实例
+# 开始对话
+## 8.2 记忆系统：让智能体拥有记忆
+### 8.2.1 记忆系统的工作流程
+### 8.2.2 快速体验：30秒上手记忆功能
+# 创建具有记忆能力的Agent
+# 体验记忆功能print("=== 添加多个记忆 ===")# 添加第一个记忆
+### 8.2.3 MemoryTool详解
+# 1. 工作记忆 - 临时信息，容量有限
+# 基础搜索
+# 1. 基于重要性的遗忘 - 删除重要性低于阈值的记忆
+# 将重要的工作记忆转为情景记忆
+### 8.2.4 MemoryManager详解
+### 8.2.5 四种记忆类型
+## 8.3 RAG系统：知识检索增强
+### 8.3.1 RAG的基础知识
+### 8.3.2 RAG系统工作原理
+### 8.3.3 快速体验：30秒上手RAG功能
+# 创建具有RAG能力的Agent
+# 体验RAG功能# 添加第一个知识
+### 8.3.4 RAG系统架构设计
+### 8.3.5 高级检索策略
+## 8.4 构建智能文档问答助手
+### 8.4.1 案例背景与目标
+### 8.4.2 核心助手类的实现
+### 8.4.3 智能问答功能
+# 生成多样化查询
+### 8.4.4 其他核心功能
+### 8.4.5 运行效果展示
+## 8.5 本章总结与展望
+## 习题
+## 参考文献
+# 第九章 上下文工程
+## 9.1 什么是上下文工程
+## 9.2 为什么上下文工程重要
+### 9.2.1 有效上下文的“解剖学”
+### 9.2.2 上下文检索与智能体式搜索
+### 9.2.3 面向长时程任务的上下文工程
+## 9.3 在 Hello-Agents 中的实践：ContextBuilder
+### 9.3.1 设计动机与目标
+### 9.3.2 核心数据结构
+### 9.3.3 GSSC 流水线详解
+### 9.3.4 完整使用示例
+# 1. 初始化工具
+# 使用示例
+### 9.3.5 最佳实践与优化建议
+## 9.4 NoteTool：结构化笔记
+### 9.4.1 设计理念与应用场景
+# 记录任务状态
+# 在 Agent 的 run 方法中def run(self, user_input: str) -> str:# 1. 检索相关笔记
+### 9.4.2 存储格式详解
+# 项目进展 - 第一阶段
+## 完成情况
+## 测试覆盖
+## 下一步计划
+### 9.4.3 核心操作详解
+## 下一步
+### 9.4.4 与 ContextBuilder 的深度集成
+### 9.4.5 最佳实践
+## 9.5 TerminalTool：即时文件系统访问
+### 9.5.1 设计理念与安全机制
+# 传统方式:预先索引所有文件(成本高、可能过时)
+# 检查日志文件大小
+# 查看 CSV 文件的前几行
+# 初始化时指定工作目录
+### 9.5.2 核心功能详解
+# 第一步:查看项目结构
+### 9.5.3 典型使用模式
+### 9.5.4 与其他工具的协同
+# 使用 TerminalTool 发现项目结构
+# 发现一个性能瓶颈
+# 探索代码库
+## 9.6 长程智能体实战：代码库维护助手
+### 9.6.1 场景设定与需求分析
+### 9.6.2 系统架构设计
+### 9.6.3 核心实现
+### 9.6.4 完整使用示例
+# ========== 初始化助手 ==========from hello_agents import HelloAgentsLLM
+## 任务清单
+## 时间安排
+## 风险
+### 9.6.5 运行效果分析
+## 9.7 本章总结
+### 理论层面
+### 工程实践
+### 核心收获
+## 习题
+## 参考文献
+# 第十章 智能体通信协议
+## 10.1 智能体通信协议基础
+### 10.1.1 为何需要通信协议
+# 传统方式：手动集成每个服务class GitHubTool(BaseTool):"""需要手写GitHub API适配器"""def run(self, repo_url):# 大量的API调用代码...passclass DatabaseTool(BaseTool):"""需要手写数据库适配器"""def run(self, query):# 数据库连接和查询代码...passclass WeatherTool(BaseTool):"""需要手写天气API适配器"""def run(self, location):# 天气API调用代码...pass# 每个新服务都需要重复这个过程
+# 连接到MCP服务器，自动获得所有工具
+### 10.1.2 三种协议设计理念比较
+### 10.1.3 HelloAgents 通信协议架构设计
+### 10.1.4 本章学习目标与快速体验
+# 安装HelloAgents框架（第10章版本）
+# 1. MCP：访问工具
+## 10.2 MCP 协议实战
+### 10.2.1 MCP 协议概念介绍
+# 步骤1：为每个LLM提供商定义函数# OpenAI格式
+# 步骤1：连接到社区提供的MCP服务器（无需自己实现）
+### 10.2.2 使用 MCP 客户端
+# 列出可用资源
+# 列出可用提示
+# 创建 GitHub MCP 工具
+### 10.2.3 MCP 传输方式详解
+# 1. Memory Transport - 内存传输（用于测试）# 不指定任何参数，使用内置演示服务器
+# 使用内置演示服务器（Memory传输）
+# 方式1：使用自定义Python服务器
+# 注意：MCPTool 主要用于 Stdio 和 Memory 传输# 对于 HTTP/SSE 等远程传输，建议使用底层的 MCPClientimport asyncio
+# 注意：MCPTool 主要用于 Stdio 和 Memory 传输# 对于 SSE 传输，建议使用底层的 MCPClientimport asyncio
+# 注意：MCPTool 主要用于 Stdio 和 Memory 传输# 对于 StreamableHTTP 传输，建议使用底层的 MCPClientimport asyncio
+### 10.2.4 在智能体中使用 MCP 工具
+# 用户代码
+# Agent调用计算器
+# 加载.env文件中的环境变量
+### 10.2.5 MCP 社区生态
+# Agent可以自动：# - 打开浏览器访问网站# - 填写表单并提交# - 截图验证结果# - 生成测试报告
+# Agent可以：# - 搜索最新技术资讯（Perplexity）# - 整理成结构化笔记# - 保存到Obsidian知识库# - 自动建立笔记间的链接
+# Agent可以：# - 从GitHub Issue创建Jira任务# - 同步代码提交到Jira# - 自动更新Sprint进度# - 生成项目报告
+# Agent可以：# - 获取YouTube视频字幕# - 生成内容摘要# - 保存到Notion数据库# - 播放背景音乐（Spotify）
+## 10.3 A2A 协议实战
+### 10.3.1 协议设计动机
+### 10.3.2 使用 A2A 协议实战
+# 创建智能体
+# 创建并测试自定义智能体
+### 10.3.3 使用 HelloAgents A2A 工具
+# 创建研究员Agent服务
+# 创建客户端连接到研究员Agent
+# 1. 创建多个Agent服务
+### 10.3.4 在智能体中使用 A2A 工具
+# 创建两个需要协商的Agent
+## 10.4 ANP 协议实战
+### 10.4.1 协议目标
+### 10.4.2 使用 ANP 服务发现
+# 创建服务发现中心
+# 按类型查找
+# 创建网络
+### 10.4.3 实战案例
+# 创建服务发现中心
+# 模拟请求分配for i in range(10):
+## 10.5 构建自定义 MCP 服务器
+### 10.5.1 创建你的第一个 MCP 服务器
+# 创建 MCP 服务器
+### 10.5.2 上传 MCP 服务器
+# Multi-stage build for weather-mcp-server
+# Set working directory
+# Install system dependencies
+# Copy project files
+# Install Python dependencies
+# Set environment variables
+# Expose port (Smithery uses 8081)
+# Health check
+# Run the MCP server
+# 安装 Smithery CLInpm install -g @smithery/cli
+# 安装你的服务器
+## 10.6 本章总结
+# 统一的Tool接口from hello_agents.tools import MCPTool, A2ATool, ANPTool
+# 所有协议都可以作为Tool添加到Agent
+## 习题
+## [参考文献](https%3A%2F%2Fdatawhalechina.github.io%2Fhello-agents%2F%23%2F.%2Fchapter10%2F%25E7%25AC%25AC%25E5%258D%2581%25E7%25AB%25A0%2520%25E6%2599%25BA%25E8%2583%25BD%25E4%25BD%2593%25E9%2580%259A%25E4%25BF%25A1%25E5%258D%258F%25E8%25AE%25AE%3Fid%3D%25e5%258f%2582%25e8%2580%2583%25e6%2596%2587%25e7%258c%25ae)
+# 第十一章 Agentic-RL
+## 11.1 从 LLM 训练到 Agentic RL
+### 11.1.1 从强化学习到 Agentic RL
+### 11.1.2 LLM 训练全景图
+### 11.1.3 Agentic RL 的核心理念
+### 11.1.4 HelloAgents 的 Agentic RL 设计
+### 11.1.5 快速上手示例
+# 安装HelloAgents框架(第11章版本)
+# 创建RL训练工具
+## 11.2 数据集与奖励函数
+### 11.2.1 GSM8K 数学推理数据集
+# 创建工具
+### 11.2.2 奖励函数设计
+# 创建长度惩罚奖励函数
+# 创建步骤奖励函数
+# 组合奖励函数:准确率 + 长度惩罚 + 步骤奖励# 注意: RLTrainingTool目前支持单一奖励类型# 组合奖励需要在训练配置中通过reward_fn参数指定# 这里展示如何配置不同类型的奖励函数# 准确率奖励
+### 11.2.3 自定义数据集和奖励函数
+# 1. 准备原始数据
+# 1. 注册数据集
+# 1. 注册奖励函数
+# 1. 准备自定义数据
+# 4. 创建工具并注册
+## 11.3 SFT 训练
+### 11.3.1 为什么需要 SFT
+# 加载预训练模型
+# 加载SFT模型(假设已经训练好)
+### 11.3.2 LoRA：参数高效微调
+### 11.3.3 SFT 训练实战
+# 创建训练工具
+### 11.3.4 模型评估
+# 评估预训练模型(未经SFT)
+## 11.4 GRPO 训练
+### 11.4.1 从 PPO 到 GRPO
+### 11.4.2 GRPO 训练实战
+# 创建训练工具
+### 11.4.3 GRPO 训练过程解析
+# 假设我们有一个问题
+# 1. 设置wandb(需要先注册账号: https://wandb.ai)
+# 1. 训练时会自动在output_dir下创建tensorboard日志
+# 训练过程会打印详细日志
+## 11.5 模型评估与分析
+### 11.5.1 评估指标体系
+### 11.5.2 评估实战
+# 评估三个模型
+### 11.5.3 错误分析
+# 按推理步骤数分组
+### 11.5.4 改进方向
+## 11.6 完整训练流程实战
+### 11.6.1 端到端训练流程
+# 使用
+### 11.6.2 超参数调优
+# 定义参数网格
+# 定义参数范围
+### 11.6.3 分布式训练
+# 使用配置文件
+# 或者直接指定参数
+# ZeRO-2
+# ZeRO-3
+# 其他配置相同
+# 在主节点上
+# 在工作节点1上
+# 在工作节点2上
+# 在工作节点3上
+# 单GPU: batch_size=4, gradient_accumulation=4, 总batch=16# 4GPU DDP: batch_size=4, gradient_accumulation=1, 总batch=16 (保持一致)
+# 基准: 单GPU, batch=16, lr=5e-5# 4GPU: batch=64, lr=5e-5 × sqrt(64/16) = 1e-4
+# 启用详细日志
+# 启用NCCL调试(多节点)
+# 检查GPU利用率
+### 11.6.4 生产部署
+# 加载基础模型
+# 加载模型(使用8-bit量化)
+# 测试
+## 11.8 本章小结
+## 参考文献
+## 习题
+# 第十二章 智能体性能评估
+## 12.1 智能体评估基础
+### 12.1.1 为何需要智能体评估
+# 创建LLM和智能体
+### 12.1.2 主流评估基准概览
+### 12.1.3 HelloAgents 评估体系设计
+### 12.1.4 本章学习目标与快速体验
+# 安装HelloAgents框架（第12章版本）
+## 12.2 BFCL：工具调用能力评估
+### 12.2.1 BFCL 基准介绍
+# 示例1：参数顺序不同（匹配成功）
+# 示例2：等价表达式（匹配成功）
+# 示例3：函数名错误（匹配失败）
+# 示例4：参数值错误（匹配失败）
+# 假设评估结果
+# 安装BFCL评估工具
+# 运行官方评估
+### 12.2.2 获取 BFCL 数据集
+# 克隆BFCL仓库git clone https://github.com/ShishirPatil/gorilla.git temp_gorilla
+# 查看BFCL v4数据集ls bfcl_eval/data/
+# 输出: BFCL_v4_simple_python.json  BFCL_v4_multiple.json  BFCL_v4_parallel.json  ...# 查看ground truthls bfcl_eval/data/possible_answer/
+# 输出: BFCL_v4_simple_python.json  BFCL_v4_multiple.json  ...
+# 加载BFCL官方数据
+# 获取所有支持的类别
+### 12.2.3 在 HelloAgents 中实现 BFCL 评估
+# 1. 创建要评估的智能体
+# BFCL评估报告
+## 📊 评估概览
+## 📈 详细指标
+### 分类准确率
+## 📝 样本详情
+## 📊 准确率可视化
+## 💡 建议
+# 运行评估脚本
+# 1. 创建智能体
+### 12.2.4 BFCL 官方评估工具集成
+# 创建智能体
+# 禁用官方评估
+# 运行评估
+### 12.2.5 核心组件实现细节
+### 12.2.6 扩展与优化建议
+# 第一步：快速测试（5个样本）
+# 配置1：默认提示词
+## 12.3 GAIA：通用 AI 助手能力评估
+### 12.3.1 GAIA 基准介绍
+# 数字答案
+# 1. 精确匹配率
+### 12.3.2 获取 GAIA 数据集
+# HuggingFace API 配置
+# 确保设置了HF_TOKEN，如果设置了.env无需这一行
+# 设置Token
+# 查看数据集统计
+### 12.3.3 在 HelloAgents 中实现 GAIA 评估
+# GAIA官方系统提示词（来自论文）
+# 1. 加载数据集
+# GAIA评估报告
+## 📊 评估概览
+## 📈 详细指标
+### 分级准确率
+## 📝 样本详情（前10个）
+## 📊 准确率可视化
+## 💡 建议
+### 12.3.4 提交结果到 GAIA 官方排行榜
+# 读取结果文件with open("evaluation_results/gaia_official/gaia_level1_result_*.jsonl", "r") as f:for line in f:
+### 12.3.5 核心组件实现细节
+## 📊 评估概览
+## 📈 详细指标
+### 分级准确率
+## 📝 样本详情（前10个）
+## 📊 准确率可视化
+## 💡 建议
+## 12.4 数据生成质量评估
+### 12.4.1 评估方法概述
+### 12.4.2 系统架构
+### 12.4.3 AIME 题目生成器实现
+### 12.4.4 LLM Judge 评估工具
+# LLM Judge评估报告
+## 总体评分
+## 各维度评分
+### 12.4.5 Win Rate 评估工具
+# Win Rate评估报告
+## 胜率统计
+### 12.4.6 人工验证界面
+# 启动人工验证界面
+# 打开浏览器访问
+### 12.4.7 完整评估流程
+# 基本用法（默认3秒延迟）
+### 12.4.8 综合评估报告
+# AIME数据生成与评估综合报告
+## 1. 基本信息
+## 2. 数据生成统计
+### 主题分布
+## 3. LLM Judge评估结果
+### 总体评分
+### 各维度评分
+## 4. Win Rate评估结果
+### 胜率统计
+## 5. 综合结论
+## 6. 改进建议
+## 7. 下一步行动
+## 12.5 本章小结
+## 习题
+## 参考文献
+# 第四部分：综合案例进阶
+# 第十三章 智能旅行助手
+## 13.1 项目概述与架构设计
+### 13.1.1 为什么需要智能旅行助手
+### 13.1.2 技术架构概览
+### 13.1.3 快速体验：5 分钟运行项目
+# 1. 进入后端目录cd helloagents-trip-planner/backend
+# 2. 安装依赖
+# 3. 配置环境变量cp .env.example .env
+# 编辑.env文件，填入你的API密钥# 4. 启动后端服务
+# 1. 进入前端目录cd helloagents-trip-planner/frontend
+# 2. 安装依赖npm install# 3. 启动前端服务npm run dev
+## 13.2 数据模型设计
+### 13.2.1 Web 应用中的数据流转
+### 13.2.2 从字典到 Pydantic 模型
+# 第一章的做法：使用字典
+### 13.2.3 Pydantic 的核心概念
+### 13.2.4 自底向上的模型设计
+### 13.2.5 数据模型在 Web 应用中的应用
+## 13.3 多智能体协作设计
+### 13.3.1 为何需要多智能体
+### 13.3.2 Agent 角色设计
+### 13.3.3 Agent 协作流程
+### 13.3.4 查询构建
+## 13.4 MCP 工具集成详解
+### 13.4.1 为什么不直接调用 API
+### 13.4.2 高德地图 MCP 集成
+# 创建一个MCPTool
+### 13.4.3 共享 MCP 实例
+### 13.4.4 Unsplash 图片 API 集成
+# backend/app/services/unsplash_service.pyimport requests
+# backend/app/api/routes/trip.pyfrom app.services.unsplash_service import UnsplashService
+## 13.5 前端开发详解
+### 13.5.1 前后端分离的 Web 架构
+### 13.5.2 类型定义
+### 13.5.3 API 服务封装
+### 13.5.4 Home 表单设计
+### 13.5.5 Result 页面展示
+## 13.6 功能实现详解
+### 13.6.1 预算计算功能
+### 13.6.2 加载进度条
+### 13.6.3 行程编辑功能
+### 13.6.4 导出功能
+### 13.6.5 侧边导航与锚点跳转
+## 13.7 结语
+# 第十四章 自动化深度研究智能体
+## 14.1 项目概述与架构设计
+### 14.1.1 为什么需要深度研究助手
+### 14.1.2 技术架构概览
+### 14.1.3 快速体验：5 分钟运行项目
+# 1. 进入后端目录cd helloagents-deepresearch/backend
+# 2. 安装依赖# 方式1：使用uv（推荐，更快的Python包管理器）
+# 4. 编辑.env文件，填入你的API密钥# 使用你喜欢的编辑器打开.env文件# 至少需要配置：# - LLM_PROVIDER（如 openai、deepseek、qwen）# - LLM_API_KEY（你的LLM API密钥）# - SEARCH_API（如 duckduckgo、tavily）# 5. 启动后端
+# 1. 进入前端目录cd helloagents-deepresearch/frontend
+# 2. 安装依赖npm install# 3. 启动前端npm run dev
+## 14.2 TODO 驱动的研究范式
+### 14.2.1 什么是 TODO 驱动的研究
+### 14.2.2 三阶段研究流程
+## Datawhale的基本信息
+## 来源
+# Datawhale是一个什么样的组织？
+## 概述
+## 1. Datawhale的基本信息
+## 2. Datawhale的主要项目
+## 总结
+## 参考文献
+## 14.3 智能体系统设计
+### 14.3.1 Agent 职责划分
+## 核心观点
+## 来源
+# 多模态大模型的最新进展
+## 概述
+## 1. 什么是多模态模型
+## 2. 最新的多模态模型有哪些
+## 总结
+## 参考文献
+### 任务1：什么是多模态模型
+### 14.3.2 ToolAwareSimpleAgent 的设计
+### 14.3.3 Agent 协作模式
+## 14.4 工具系统集成
+### 14.4.1 SearchTool 扩展
+# config.pyclass SearchAPI(str, Enum):
+# .env
+### 14.4.2 NoteTool 使用
+### 14.4.3 ToolRegistry 工具管理
+# 创建工具
+## 14.5 服务层实现
+### 14.5.1 任务规划服务
+# Agent响应示例1：包含额外文本
+### 14.5.2 总结服务
+### 报告结构设计
+### 14.5.3 报告生成服务
+### 14.5.4 搜索调度服务
+## 14.6 前端交互设计
+### 14.6.1 全屏模态对话框 UI 设计
+### 14.6.2 实时进度展示
+### 14.6.3 研究结果可视化
+## 参考文献
+### 任务1：Datawhale的基本信息
+### 任务2：Datawhale的主要项目
+## 14.7 本章小结
+# 第十五章 构建赛博小镇
+## 15.1 项目概述与架构设计
+### 15.1.1 为什么要构建 AI 小镇
+### 15.1.2 技术架构概览
+### 15.1.3 快速体验：5 分钟运行项目
+# 1. 进入backend目录cd Helloagents-AI-Town/backend
+# 2. 安装依赖
+# 3. 配置环境变量cp .env.example .env
+# 编辑.env文件，填写你的API密钥# 4. 启动后端服务
+# 在backend目录下
+## 15.2 NPC 智能体系统
+### 15.2.1 基于 HelloAgents 的 SimpleAgent
+### 15.2.2 NPC 角色设定与 Prompt 设计
+### 15.2.3 记忆系统集成
+# Agent处理对话的流程def process_dialogue(agent, player_message):# 1. 从短期记忆获取最近对话
+### 15.2.4 批量对话生成：轻负载模式
+# 在main.py中的混合模式实现@app.post("/dialogue")async def dialogue(request: DialogueRequest):"""处理玩家与NPC的对话(即时响应模式)"""
+## 15.3 好感度系统设计
+### 15.3.1 好感度等级划分
+### 15.3.2 好感度计算逻辑
+### 15.3.3 好感度影响对话
+## 15.4 后端服务实现
+### 15.4.1 FastAPI 应用结构
+# 创建FastAPI应用
+### 15.4.2 API 路由设计
+### 15.4.3 状态管理与日志系统
+# state_manager.pyfrom typing import Dict, List, Optional
+# logger.pyimport logging
+### 15.4.4 理解 Godot 的场景系统
+## 15.5 Godot 游戏场景构建
+### 15.5.1 场景设计与资源组织
+### 15.5.2 玩家控制实现
+# 移动速度@export var speed: float = 200.0# 当前可交互的NPC
+# 交互状态(交互时禁用移动)
+# 节点引用@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
+# 音效引用@onready var interact_sound: AudioStreamPlayer = null
+# 走路音效状态
+### 15.5.3 NPC 行为与交互
+# NPC信息@export var npc_name: String = "张三"@export var npc_title: String = "Python工程师"# NPC外观配置@export var sprite_frames: SpriteFrames = null  # 自定义精灵帧资源# NPC移动配置@export var move_speed: float = 50.0  # 移动速度@export var wander_enabled: bool = true  # 是否启用巡逻@export var wander_range: float = 200.0  # 巡逻范围@export var wander_interval_min: float = 3.0  # 最小巡逻间隔(秒)@export var wander_interval_max: float = 8.0  # 最大巡逻间隔(秒)# 当前对话内容(从后端获取)
+# 玩家引用
+# 巡逻相关变量
+## 15.6 前后端通信实现
+### 15.6.1 API 客户端封装
+# api_client.gd
+# 信号定义
+### 15.6.2 对话 UI 实现
+# dialogue_ui.gd
+# UI节点引用@onready var panel = $Panel
+# API客户端
+# 当前对话的NPC
+### 15.6.3 主场景整合
+# main.gd
+# NPC节点引用@onready var npc_zhang: Node2D = $NPCs/NPC_Zhang
+# API客户端
+# NPC状态更新计时器
+## 15.7 总结与展望
+### 15.7.1 本章回顾
+### 15.7.2 扩展方向
+### 15.7.3 思考与展望
+# 第五部分：毕业设计及未来展望
+# 第十六章 毕业设计：构建属于你的多智能体应用
+## 16.1 毕业设计的意义
+### 16.1.1 为什么要做毕业设计
+### 16.1.2 毕业设计的形式
+## 16.2 项目选题指南
+### 16.2.1 选题原则
+### 16.2.2 推荐选题方向
+### 16.2.3 选题示例
+## 16.3 开发环境准备
+### 16.3.1 安装必要工具
+# 安装HelloAgents
+# 检查Git版本git --version# 配置Git用户信息git config --global user.name "你的名字"git config --global user.email "你的邮箱"# 配置GitHub SSH密钥（推荐）# 1. 生成SSH密钥
+# 安装Jupyter
+# 或者使用JupyterLab（推荐）
+# 启动Jupyter
+### 16.3.2 Fork 项目仓库
+# 如图16.2所示，克隆你Fork的仓库git clone git@github.com:你的用户名/Hello-Agents.git
+# 进入项目目录cd Hello-Agents
+# 添加上游仓库（用于同步更新）git remote add upstream https://github.com/datawhalechina/Hello-Agents.git
+# 查看远程仓库git remote -v
+# 创建并切换到新分支git checkout -b feature/你的项目名称
+# 例如:git checkout -b feature/code-review-agent
+### 16.3.3 项目目录结构
+# 进入共创项目目录cd Co-creation-projects
+# 创建项目文件夹（格式:GitHub用户名-项目名称）mkdir 你的用户名-项目名称
+# 例如:mkdir jjyaoao-CodeReviewAgent
+# 进入项目目录cd jjyaoao-CodeReviewAgent
+## 16.4 项目开发指南
+### 16.4.1 编写 README 文档
+# 项目名称
+## 📝 项目简介
+## ✨ 核心功能
+## 🛠️ 技术栈
+## 🚀 快速开始
+### 环境要求
+### 安装依赖
+### 配置API密钥
+# 创建.env文件
+# 编辑.env文件，填入你的API密钥
+### 运行项目
+# 启动Jupyter Notebook
+# 打开main.ipynb并运行
+## 📖 使用示例
+## 🎯 项目亮点
+## 📊 性能评估
+## 🔮 未来计划
+## 🤝 贡献指南
+## 📄 许可证
+## 👤 作者
+## 🙏 致谢
+### 16.4.2 编写 requirements.txt
+# 核心依赖
+# 可视化（如果需要）
+# Web框架（如果需要）
+### 16.4.3 开发 Jupyter Notebook
+# ========================================# 第1部分:项目介绍# ========================================"""
+# 项目名称
+## 项目简介
+## 作者信息
+# 加载环境变量
+## 项目总结
+### 实现的功能
+### 遇到的挑战
+### 未来改进方向
+### 16.4.4 测试你的项目
+### 16.4.5 大文件处理指南
+## 数据集
+## 项目资源
+### 使用方法
+# 克隆资源仓库
+# 将数据放到项目目录
+# 在README中说明## 数据说明- `data/sample.csv`: 示例数据（100条记录）
+## 数据和资源
+### 示例数据
+### 完整数据集
+### 演示视频
+## 16.5 提交 Pull Request
+### 16.5.1 提交代码到 GitHub
+# 查看修改的文件git status
+# 添加所有修改的文件git add .# 或者添加特定文件git add Co-creation-projects/你的用户名-项目名称/
+# 格式:类型: 简短描述git commit -m "feat: 添加XXX毕业设计项目"
+# 推送到你的Fork仓库git push origin feature/你的项目名称
+### 16.5.2 创建 Pull Request
+## 项目信息
+## 项目简介
+## 核心功能
+## 技术亮点
+## 演示效果
+## 自检清单
+## 其他说明
+### 16.5.3 响应 Review 意见
+## 16.6 示例项目展示
+# ========================================# 智能代码审查助手# ========================================from hello_agents import SimpleAgent, HelloAgentsLLM, ToolRegistry
+# ========================================# 0. 配置LLM参数# ========================================
+# CodeReviewAgent - 智能代码审查助手
+## 📝 项目简介
+### 核心功能
+## 🛠️ 技术栈
+## 🚀 快速开始
+### 安装依赖
+### 配置LLM参数
+# 编辑.env文件,填入你的API密钥
+### 运行项目
+# 打开main.ipynb并运行所有单元格
+## 📖 使用示例
+## 🎯 项目亮点
+## 👤 作者
+## 🙏 致谢
+## 16.7 总结与展望
